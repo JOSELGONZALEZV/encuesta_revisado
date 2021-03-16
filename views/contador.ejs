@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/bootstrap.bundle.min.js"></script>
+    <script src="/jquery-3.5.1.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+        <div class="container-fluid" style="background-color:rgb(90, 103, 221)">
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/" style="background-color:rgb(123, 131, 199)">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contador" style="background-color:rgb(134, 182, 221)" >counter</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/colores" style="background-color:rgb(162, 182, 207)">color</a>
+              </li>
+          </div>
+        </div>
+      </nav>
+    <div class="conteiner">
+        <div class="row">
+            <div class="col-4 offset-md-2">
+                <h2 clas="center">VISIT PAGE NUMBER: <span class="text" id="numero"></span></h2> </h2>
+            </div>
+            <br>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <button class="btn waves-effect waves-light btn btn-primary" id="count">Push the epic buttom</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn waves-effect waves-light btn btn-danger" id="resert">resert</button>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class= "col-4 offset-md-6">
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+        </div>
+    </div>
+</div>
+
+    <script>
+
+        const socket = io('http://localhost:8000');
+        $('documment').ready(function(){
+        
+        $('#count').on('click', function(){
+            
+            socket.emit('count_activ', {});
+
+            socket.on('count_actualizado', function(data) { 
+            $('#numero').html(`${data.count}`);
+            });
+        });
+
+    
+        $('#resert').on('click', function(){
+            
+            socket.emit('count_resert',{});
+
+            socket.on('count_actualizado', function(data){
+            $('#numero').html(`${data.count}`);
+            });
+        });
+        });
+    
+    </script>
+
+    
+</body>
+</html>
